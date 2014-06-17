@@ -8,14 +8,12 @@ class OutboundCaller
   end
 
   def call(outbound_phone_number, twiml_url)
-    if env_vars_present?
-      @client.account.calls.create(
-        from: ENV['TWILIO_NUMBER'],
-        to: outbound_phone_number,
-        url: twiml_url,
-        method: 'GET',
-      )
-    end
+    client.account.calls.create(
+      from: ENV['TWILIO_NUMBER'],
+      to: outbound_phone_number,
+      url: twiml_url,
+      method: 'GET',
+    )
   end
 
   private
