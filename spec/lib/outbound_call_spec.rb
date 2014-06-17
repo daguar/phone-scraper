@@ -6,21 +6,21 @@ describe OutboundCaller do
       let(:fake_good_env) do
         { 'TWILIO_SID' => 'fakesid',
           'TWILIO_AUTH' => 'fakeauth',
-          'TWILIO_NUMBER' => '12223334444' }
+          'TWILIO_NUMBER' => '+15005550006' }
       end
-      let(:caller) { OutboundCaller.new }
+      let(:outbound_caller) { OutboundCaller.new }
 
       before(:each) do
         stub_const('ENV', fake_good_env)
       end
 
       it 'initializes a Twilio client' do
-        expect(caller.client).to be_a(Twilio::REST::Client)
+        expect(outbound_caller.client).to be_a(Twilio::REST::Client)
       end
 
       it 'contains a properly-configured client' do
-        expect(caller.client.account_sid).to eq(fake_good_env['TWILIO_SID'])
-        expect(caller.client.instance_variable_get("@auth_token")).to eq(fake_good_env['TWILIO_AUTH'])
+        expect(outbound_caller.client.account_sid).to eq(fake_good_env['TWILIO_SID'])
+        expect(outbound_caller.client.instance_variable_get("@auth_token")).to eq(fake_good_env['TWILIO_AUTH'])
       end
     end
 
@@ -41,27 +41,26 @@ describe OutboundCaller do
 
   describe '#call' do
     let(:fake_good_env) do
-      { 'TWILIO_SID' => 'fakesid',
-        'TWILIO_AUTH' => 'fakeauth',
-        'TWILIO_NUMBER' => '12223334444' }
+      { 'TWILIO_SID' => 'AC96b99a489a8045a0cfac2c1857af81e9',
+        'TWILIO_AUTH' => 'cd3e727407ed725851e8163b8a022f41',
+        'TWILIO_NUMBER' => '+15005550006' }
     end
-    let(:caller) { OutboundCaller.new }
-    let(:fake_outbound_number) { '19998887777' }
+    let(:outbound_caller) { OutboundCaller.new }
+    let(:fake_outbound_number) { '+14108675309' }
     let(:fake_twiml_url) { 'https://example.com/fake.xml' }
 
     before do
       stub_const('ENV', fake_good_env)
     end
 
-    it 'makes an outbound Twilio call' do
-      caller.client.stub_chain(:account, :calls, :create)
-      #caller.client.account.calls.stub(:create)
-      caller.call(fake_outbound_number, fake_twiml_url)
-      expect(caller.client.account.calls).to receive(:create).with(
-        { from: fake_good_env['TWILIO_NUMBER'],
-        to: fake_outbound_number,
-        url: fake_twiml_url,
-        method: 'GET' } )
+    it 'makes an outbound Twilio call with the correct info' do
+      VCR.use_cassette('twilio-outbound-test') do
+        outbound_call = outbound_caller.call(fake_outbound_number, fake_twiml_url)
+        expect(outbound_call).to be_a(Twilio::REST::Call)
+        expect(outbound_call.to).to eq(fake_outbound_number)
+        expect(outbound_call.from).to eq(fake_good_env['TWILIO_NUMBER'])
+        # Note: response doesn't contain URL or method sent, so not testing here
+      end
     end
   end
   end

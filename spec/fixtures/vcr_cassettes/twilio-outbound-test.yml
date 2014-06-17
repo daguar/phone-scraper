@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://AC96b99a489a8045a0cfac2c1857af81e9:cd3e727407ed725851e8163b8a022f41@api.twilio.com/2010-04-01/Accounts/AC96b99a489a8045a0cfac2c1857af81e9/Calls.json
+    body:
+      encoding: US-ASCII
+      string: From=%2B15005550006&To=%2B14108675309&Url=https%3A%2F%2Fexample.com%2Ffake.xml&Method=GET
+    headers:
+      Accept:
+      - application/json
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - twilio-ruby/3.11.5 (true/x86_64-darwin11.0 2.1.1-p76)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Tue, 17 Jun 2014 03:51:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1032'
+      Connection:
+      - close
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+    body:
+      encoding: UTF-8
+      string: '{"sid": "CAc624d5293d9e2fe4edbd6df1d8a6794a", "date_created": "Tue,
+        17 Jun 2014 03:51:52 +0000", "date_updated": "Tue, 17 Jun 2014 03:51:52 +0000",
+        "parent_call_sid": null, "account_sid": "AC96b99a489a8045a0cfac2c1857af81e9",
+        "to": "+14108675309", "to_formatted": "(410) 867-5309", "from": "+15005550006",
+        "from_formatted": "(500) 555-0006", "phone_number_sid": null, "status": "queued",
+        "start_time": null, "end_time": null, "duration": null, "price": null, "price_unit":
+        "USD", "direction": null, "answered_by": null, "api_version": "2010-04-01",
+        "annotation": null, "forwarded_from": null, "group_sid": null, "caller_name":
+        null, "uri": "/2010-04-01/Accounts/AC96b99a489a8045a0cfac2c1857af81e9/Calls/CAc624d5293d9e2fe4edbd6df1d8a6794a.json",
+        "subresource_uris": {"notifications": "/2010-04-01/Accounts/AC96b99a489a8045a0cfac2c1857af81e9/Calls/CAc624d5293d9e2fe4edbd6df1d8a6794a/Notifications.json",
+        "recordings": "/2010-04-01/Accounts/AC96b99a489a8045a0cfac2c1857af81e9/Calls/CAc624d5293d9e2fe4edbd6df1d8a6794a/Recordings.json"}}'
+    http_version: 
+  recorded_at: Tue, 17 Jun 2014 03:51:54 GMT
+recorded_with: VCR 2.9.0
